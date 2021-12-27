@@ -19,7 +19,7 @@ func removeBucket(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 	}
 
 	// check bucket
-	found, err := minioClient.BucketExists(context.Background(), bucketName)
+	found, err := minioClient.BucketExists(ctx, bucketName)
 	// bucket not found
 	if err != nil {
 		fmt.Println(err)
@@ -36,7 +36,7 @@ func removeBucket(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 	}
 
 	// remove bucket
-	err = minioClient.RemoveBucket(context.Background(), bucketName)
+	err = minioClient.RemoveBucket(ctx, bucketName)
 	if err != nil {
 		fmt.Println(err)
 		return

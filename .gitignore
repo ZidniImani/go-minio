@@ -10,5 +10,3 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-list-object.go
-create-and-upload.go

@@ -14,13 +14,16 @@ func argumentReader(argsRaw []string) {
 	// read arguments
 	switch {
 	case argsRaw[0] == "ls":
-		getBucketList(minioClient, ctx)
+		getList(minioClient, ctx, argsRaw)
 	case argsRaw[0] == "mb":
 		createBucket(minioClient, ctx, argsRaw)
 	case argsRaw[0] == "rb":
 		removeBucket(minioClient, ctx, argsRaw)
-	case argsRaw[0] == "lb":
-		listBucketObject(minioClient, argsRaw)
+	// object operation
+	case argsRaw[0] == "up":
+		uploadObject(minioClient, ctx, argsRaw)
+	case argsRaw[0] == "rm":
+		removeObject(minioClient, ctx, argsRaw)
 	default:
 		panic("Unknown argument")
 	}
@@ -30,14 +33,17 @@ func argumentReader(argsRaw []string) {
 func unknownArgs() {
 	if err := recover(); err != nil {
 		fmt.Println("Unknown argument parameter")
-		fmt.Printf("Error: %v", err)
+		fmt.Printf("Error! %v", err)
 	}
 }
 
 func main() {
 	// read argument
 	var argsRaw = os.Args[1:]
-	defer unknownArgs()
-	argumentReader(argsRaw)
 
+	// catch unknown arg
+	defer unknownArgs()
+
+	// call arg reader
+	argumentReader(argsRaw)
 }
