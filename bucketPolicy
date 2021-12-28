@@ -1,0 +1,37 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"io/ioutil"
+	"strings"
+
+	"github.com/minio/minio-go/v7"
+)
+
+func bucketPolicy(minioClient *minio.Client, ctx context.Context, argsRaw []string) {
+	var bucketName, policy string
+	// check second arguments
+	if len(argsRaw) > 1 {
+		bucketName = argsRaw[1]
+	} else {
+		panic("Bucket name not found in params")
+	}
+	if len(argsRaw) > 2 {
+		// set policy
+		policy = fmt.Sprintf(readPolicy(argsRaw[2]), bucketName)
+		err = minioClient.SetBucketPolicy(context.Background(), bucketName, policy)
+		if err != nil {
+			fmt.Println("Fail to set policy")
+			return
+		}
+		fmt.Printf("Successfully set bucket %s's policy", bucketName)
+	} else {
+		// get policy
+		policy, err := client.GetBucketPolicy(context.Background(), bucketName)
+		if err != nil {
+			fmt.Printf("Failed to get policy bucket %s : %s", bucketName, err)
+		}
+		fmt.Printf("Bucket %s's policy: %s", bucketName, policy)
+	}
+}
