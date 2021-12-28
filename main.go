@@ -25,7 +25,6 @@ func argumentReader(argsRaw []string) {
 		removeObject(minioClient, ctx, argsRaw)
 	case argsRaw[0] == "policy":
 		bucketPolicy(minioClient, ctx, argsRaw)
-		// fmt.Println("Hello all something wrong here")
 	default:
 		panic("Unknown argument")
 	}
