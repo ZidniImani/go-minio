@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 )
@@ -9,22 +8,23 @@ import (
 func argumentReader(argsRaw []string) {
 	// start connection
 	minioClient := GetMinIOConnection()
-	ctx := context.Background()
+
 	// read arguments
 	switch {
 	case argsRaw[0] == "ls":
-		getList(minioClient, ctx, argsRaw)
+		getList(minioClient, argsRaw)
 	case argsRaw[0] == "mb":
-		createBucket(minioClient, ctx, argsRaw)
+		createBucket(minioClient, argsRaw)
 	case argsRaw[0] == "rb":
-		removeBucket(minioClient, ctx, argsRaw)
+		removeBucket(minioClient, argsRaw)
 	// object operation
 	case argsRaw[0] == "up":
-		uploadObject(minioClient, ctx, argsRaw)
+		uploadObject(minioClient, argsRaw)
 	case argsRaw[0] == "rm":
-		removeObject(minioClient, ctx, argsRaw)
+		removeObject(minioClient, argsRaw)
+	// set/get policy
 	case argsRaw[0] == "policy":
-		bucketPolicy(minioClient, ctx, argsRaw)
+		bucketPolicy(minioClient, argsRaw)
 	default:
 		panic("Unknown argument")
 	}

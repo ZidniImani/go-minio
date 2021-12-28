@@ -7,7 +7,7 @@ import (
 	"github.com/minio/minio-go/v7"
 )
 
-func bucketPolicy(minioClient *minio.Client, ctx context.Context, argsRaw []string) {
+func bucketPolicy(minioClient *minio.Client, argsRaw []string) {
 	var bucketName, policy string
 	// check second arguments
 	if len(argsRaw) > 1 {

@@ -9,7 +9,7 @@ import (
 	"github.com/minio/minio-go/v7"
 )
 
-func uploadObject(minioClient *minio.Client, ctx context.Context, argsRaw []string) {
+func uploadObject(minioClient *minio.Client, argsRaw []string) {
 	var bucketName, storagePath, objectName string
 
 	// check arguments
@@ -21,7 +21,7 @@ func uploadObject(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 	}
 
 	// check bucket
-	_, err := minioClient.BucketExists(ctx, bucketName)
+	_, err := minioClient.BucketExists(context.Background(), bucketName)
 	if err != nil {
 		fmt.Println(err)
 		return

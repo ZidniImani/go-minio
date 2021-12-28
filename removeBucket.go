@@ -8,7 +8,7 @@ import (
 	"github.com/minio/minio-go/v7"
 )
 
-func removeBucket(minioClient *minio.Client, ctx context.Context, argsRaw []string) {
+func removeBucket(minioClient *minio.Client, argsRaw []string) {
 	var bucketName string
 
 	// check second arguments
@@ -19,7 +19,7 @@ func removeBucket(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 	}
 
 	// check bucket
-	found, err := minioClient.BucketExists(ctx, bucketName)
+	found, err := minioClient.BucketExists(context.Background(), bucketName)
 	// bucket not found
 	if err != nil {
 		fmt.Println(err)
@@ -36,7 +36,7 @@ func removeBucket(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 	}
 
 	// remove bucket
-	err = minioClient.RemoveBucket(ctx, bucketName)
+	err = minioClient.RemoveBucket(context.Background(), bucketName)
 	if err != nil {
 		fmt.Println(err)
 		return

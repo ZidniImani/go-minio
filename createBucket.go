@@ -14,7 +14,7 @@ type Config struct {
 	Policy string `yaml:"policy"`
 }
 
-func createBucket(minioClient *minio.Client, ctx context.Context, argsRaw []string) {
+func createBucket(minioClient *minio.Client, argsRaw []string) {
 	var bucketName, policy string
 
 	// check second arguments
@@ -25,10 +25,10 @@ func createBucket(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 	}
 
 	// create bucket
-	err := minioClient.MakeBucket(ctx, bucketName, minio.MakeBucketOptions{})
+	err := minioClient.MakeBucket(context.Background(), bucketName, minio.MakeBucketOptions{})
 	if err != nil {
 		// Check bucket
-		bucketExists, err := minioClient.BucketExists(ctx, bucketName)
+		bucketExists, err := minioClient.BucketExists(context.Background(), bucketName)
 		if err == nil && bucketExists {
 			fmt.Printf("Bucket %s is exist\n", bucketName)
 			return
@@ -46,9 +46,10 @@ func createBucket(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 	err = minioClient.SetBucketPolicy(context.Background(), bucketName, policy)
 	if err != nil {
 		fmt.Printf("Successfully created bucket %s but fail to set policy\n", bucketName)
-	} else {
-		fmt.Printf("Successfully create bucket %s and set policy", bucketName)
+		return
 	}
+
+	fmt.Printf("Successfully create bucket %s and set policy", bucketName)
 
 }
 
