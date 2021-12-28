@@ -10,21 +10,6 @@ func argumentReader(argsRaw []string) {
 	// start connection
 	minioClient := GetMinIOConnection()
 	ctx := context.Background()
-
-	// policy := `{"Version": "2012-10-17","Statement": [{"Action": ["s3:GetObject"],"Effect": "Allow","Principal": {"AWS": ["*"]},"Resource": ["arn:aws:s3:::hellobucket/*"],"Sid": ""}]}`
-
-	// err := minioClient.SetBucketPolicy(context.Background(), "hellobucket", policy)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-
-	// policy, err := minioClient.GetBucketPolicy(context.Background(), "hellobucket2")
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// fmt.Printf("policy %s\n", policy)
-
 	// read arguments
 	switch {
 	case argsRaw[0] == "ls":
@@ -38,9 +23,9 @@ func argumentReader(argsRaw []string) {
 		uploadObject(minioClient, ctx, argsRaw)
 	case argsRaw[0] == "rm":
 		removeObject(minioClient, ctx, argsRaw)
-	// policy
 	case argsRaw[0] == "policy":
 		bucketPolicy(minioClient, ctx, argsRaw)
+		// fmt.Println("Hello all something wrong here")
 	default:
 		panic("Unknown argument")
 	}

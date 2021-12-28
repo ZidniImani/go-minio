@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
-	"strings"
 
 	"github.com/minio/minio-go/v7"
 )
@@ -20,7 +18,7 @@ func bucketPolicy(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 	if len(argsRaw) > 2 {
 		// set policy
 		policy = fmt.Sprintf(readPolicy(argsRaw[2]), bucketName)
-		err = minioClient.SetBucketPolicy(context.Background(), bucketName, policy)
+		err := minioClient.SetBucketPolicy(context.Background(), bucketName, policy)
 		if err != nil {
 			fmt.Println("Fail to set policy")
 			return
@@ -28,10 +26,11 @@ func bucketPolicy(minioClient *minio.Client, ctx context.Context, argsRaw []stri
 		fmt.Printf("Successfully set bucket %s's policy", bucketName)
 	} else {
 		// get policy
-		policy, err := client.GetBucketPolicy(context.Background(), bucketName)
+		policy, err := minioClient.GetBucketPolicy(context.Background(), bucketName)
 		if err != nil {
-			fmt.Printf("Failed to get policy bucket %s : %s", bucketName, err)
+			fmt.Printf("Failed to get policy bucket '%s': %s\n", bucketName, err)
+			return
 		}
-		fmt.Printf("Bucket %s's policy: %s", bucketName, policy)
+		fmt.Printf("Bucket policy: %s", policy)
 	}
 }
