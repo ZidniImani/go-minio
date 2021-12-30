@@ -1,6 +1,7 @@
 # MinIO Client - Golang
-A simple MinIO client app build with Go
-S3 object storage: [MinIO](https://min.io/)
+A simple MinIO client app build with Go.
+
+S3 object storage: [MinIO](https://min.io/).
 
 # Features
 1. Bucket operation: create, remove, list
@@ -8,7 +9,7 @@ S3 object storage: [MinIO](https://min.io/)
 3. Set/get bucket policy
 
 # How to Run
-Make sure you have MinIO client that can be connected and have Go in your computer. To run, you can run it directly with Go or build it first.
+Make sure you have [MinIO server](https://docs.min.io/docs/minio-quickstart-guide.html) that can be connected and have [Go](https://go.dev/doc/install) in your computer. To run, you can run it directly with Go or build it first.
 ## Set connection
 This project use [MinIO server](https://docs.min.io/docs/minio-quickstart-guide.html) on localhost, you can change it on connection.go if needed.
 ## Run directly with Go
