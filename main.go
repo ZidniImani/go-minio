@@ -9,12 +9,12 @@ func argumentReader(argsRaw []string) {
 	// start connection
 	minioClient := GetMinIOConnection()
 
-	// read arguments
+	// bucket operation
 	switch {
 	case argsRaw[0] == "ls":
 		getList(minioClient, argsRaw)
 	case argsRaw[0] == "mb":
-		createBucket(minioClient, argsRaw) //default policy
+		createBucket(minioClient, argsRaw) //default policy built-in
 	case argsRaw[0] == "rb":
 		removeBucket(minioClient, argsRaw)
 	// object operation
@@ -22,7 +22,7 @@ func argumentReader(argsRaw []string) {
 		uploadObject(minioClient, argsRaw)
 	case argsRaw[0] == "rm":
 		removeObject(minioClient, argsRaw)
-	case argsRaw[0] == "cp":
+	case argsRaw[0] == "cp": //copy all object
 		copyObjects(minioClient, argsRaw)
 	case argsRaw[0] == "mv":
 		moveObjects(minioClient, argsRaw)
@@ -34,10 +34,10 @@ func argumentReader(argsRaw []string) {
 	}
 }
 
+// unknown arguments handler
 func unknownArgs() {
 	if err := recover(); err != nil {
-		fmt.Println("Unknown argument parameter")
-		fmt.Printf("Error! %v", err)
+		fmt.Printf("Error: %v", err)
 	}
 }
 

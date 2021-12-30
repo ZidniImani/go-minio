@@ -23,7 +23,7 @@ func bucketPolicy(minioClient *minio.Client, argsRaw []string) {
 			fmt.Println("Fail to set policy")
 			return
 		}
-		fmt.Printf("Successfully set bucket %s's policy", bucketName)
+		fmt.Printf("Successfully set bucket %s's policy\n", bucketName)
 	} else {
 		// get policy
 		policy, err := minioClient.GetBucketPolicy(context.Background(), bucketName)
@@ -31,6 +31,6 @@ func bucketPolicy(minioClient *minio.Client, argsRaw []string) {
 			fmt.Printf("Failed to get policy bucket '%s': %s\n", bucketName, err)
 			return
 		}
-		fmt.Printf("Bucket policy: %s", policy)
+		fmt.Printf("Bucket policy: %s\n", policy)
 	}
 }

@@ -33,11 +33,12 @@ func listBucketObject(minioClient *minio.Client, argsRaw []string) {
 		Prefix: subFolder + "/",
 	})
 
+	fmt.Printf("Objects list from bucket '%s':\n", bucketName)
 	for object := range objectCh {
 		if object.Err != nil {
 			fmt.Println(object.Err)
 			return
 		}
-		fmt.Println("-", object.Key)
+		fmt.Printf("- %s\n", object.Key)
 	}
 }

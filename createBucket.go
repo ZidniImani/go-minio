@@ -43,29 +43,34 @@ func createBucket(minioClient *minio.Client, argsRaw []string) {
 	} else {
 		policy = fmt.Sprintf(readPolicy("default.yaml"), bucketName)
 	}
+	// set policy
 	err = minioClient.SetBucketPolicy(context.Background(), bucketName, policy)
 	if err != nil {
 		fmt.Printf("Successfully created bucket %s but fail to set policy\n", bucketName)
 		return
 	}
 
-	fmt.Printf("Successfully create bucket %s and set policy", bucketName)
+	// display result
+	fmt.Printf("Successfully create bucket %s and set policy\n", bucketName)
 
 }
 
 func readPolicy(yamlPath string) string {
 	var policy string
+	// read yaml file
 	yamlFile, err := ioutil.ReadFile(yamlPath)
 	if err != nil {
 		fmt.Printf("Failed to read policy file.\n%+v", err)
 		return ""
 	}
 	var config *Config
+	// unmarshal yaml
 	err = yaml.Unmarshal(yamlFile, &config)
 	if err != nil {
-		fmt.Printf("Failed to unmarshal: %+v", err)
+		fmt.Printf("Failed to unmarshal: %+v\n", err)
 		return ""
 	}
+	// convert to string
 	policy = strings.Fields(config.Policy)[0]
 	return policy
 }

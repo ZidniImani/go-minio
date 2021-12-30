@@ -29,7 +29,7 @@ func uploadObject(minioClient *minio.Client, argsRaw []string) {
 
 	// Upload
 	objectName = storagePath[strings.LastIndex(storagePath, `\`)+1:]
-	newFileName := "upload-" + objectName
+	newFileName := objectName // change this for rename uploaded file
 
 	// open file from this computer
 	file, err := os.Open(storagePath)
@@ -39,6 +39,7 @@ func uploadObject(minioClient *minio.Client, argsRaw []string) {
 	}
 	defer file.Close()
 
+	// get file status
 	fileStat, err := file.Stat()
 	if err != nil {
 		fmt.Println(err)
@@ -56,6 +57,7 @@ func uploadObject(minioClient *minio.Client, argsRaw []string) {
 		fmt.Println(err)
 		return
 	}
+	// display result
 	fmt.Printf("Successfully uploaded %s of size %d\n", objectName, fileStat.Size())
 
 }

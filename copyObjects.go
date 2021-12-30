@@ -27,6 +27,7 @@ func copyObjects(minioClient *minio.Client, argsRaw []string) {
 		Prefix: subFolder + "/",
 	})
 
+	// create wait group for goroutine
 	wg := &sync.WaitGroup{}
 	for object := range objectCh {
 
@@ -37,29 +38,30 @@ func copyObjects(minioClient *minio.Client, argsRaw []string) {
 		// run as goroutine
 		go objectCopier(minioClient, bucketNameSrc, bucketNameDst, object.Key, wg)
 	}
+	// wait till goroutine finish
 	wg.Wait()
-	fmt.Println(objectCh)
-	fmt.Printf("Successfully copy objects from %s to %s", bucketNameSrc, bucketNameDst)
+	// display result
+	fmt.Printf("Successfully copy objects from %s to %s\n", bucketNameSrc, bucketNameDst)
 }
 
 func objectCopier(minioClient *minio.Client, bucketNameSrc string, bucketNameDst string, file string, wg *sync.WaitGroup) {
 	defer wg.Done()
 	wg.Add(1)
+	// set source
 	src := minio.CopySrcOptions{
 		Bucket: bucketNameSrc,
 		Object: file,
 	}
+	// set destination
 	dst := minio.CopyDestOptions{
 		Bucket: bucketNameDst,
 		Object: file, //change this to rename copied object
 	}
 	// Copy object
 	_, err := minioClient.CopyObject(context.Background(), dst, src)
-	// fileInfo, err := minioClient.CopyObject(context.Background(), dst, src)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	// fmt.Printf("copy object %s\n", fileInfo.Key)
 
 }
