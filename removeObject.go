@@ -33,7 +33,7 @@ func removeObject(minioClient *minio.Client, argsRaw []string) {
 		return
 	} else {
 		var input string
-		fmt.Printf("Are you sure to remove bucket '%v'? \nWarning: all objects inside bucket will also be deleted (y/n): ", bucketName)
+		fmt.Printf("Are you sure to remove '%v'? \n(y/n): ", bucketName)
 		fmt.Scanln(&input)
 		if strings.ToLower(input) == "n" {
 			return
@@ -41,12 +41,16 @@ func removeObject(minioClient *minio.Client, argsRaw []string) {
 	}
 
 	// remove object
-	err = minioClient.RemoveObject(context.Background(), bucketName, objectName, minio.RemoveObjectOptions{})
+	err = objectRemover(minioClient, bucketName, objectName)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Printf("Succesfully remove object %s in bucket %s with name %s", objInfo.Key, bucketName, objectName)
+	fmt.Printf("Succesfully remove object %s in bucket %s", objInfo.Key, bucketName)
+}
+
+func objectRemover(minioClient *minio.Client, bucketName string, objectName string) error {
+	return minioClient.RemoveObject(context.Background(), bucketName, objectName, minio.RemoveObjectOptions{})
 
 }

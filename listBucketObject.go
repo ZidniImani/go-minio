@@ -14,11 +14,12 @@ func listBucketObject(minioClient *minio.Client, argsRaw []string) {
 
 	// check second arguments
 	if len(argsRaw) > 1 {
-		if len(strings.Split(argsRaw[1], `/`)) == 1 {
+		splitedString := strings.Split(argsRaw[1], `/`)
+		if len(splitedString) == 1 {
 			subFolder = ""
 			bucketName = argsRaw[1]
 		} else {
-			bucketName = strings.Split(argsRaw[1], `/`)[0]
+			bucketName = splitedString[0]
 			subFolder = argsRaw[1][strings.LastIndex(argsRaw[1], `/`)+1:]
 		}
 	} else {

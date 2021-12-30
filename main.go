@@ -14,7 +14,7 @@ func argumentReader(argsRaw []string) {
 	case argsRaw[0] == "ls":
 		getList(minioClient, argsRaw)
 	case argsRaw[0] == "mb":
-		createBucket(minioClient, argsRaw)
+		createBucket(minioClient, argsRaw) //default policy
 	case argsRaw[0] == "rb":
 		removeBucket(minioClient, argsRaw)
 	// object operation
@@ -22,6 +22,10 @@ func argumentReader(argsRaw []string) {
 		uploadObject(minioClient, argsRaw)
 	case argsRaw[0] == "rm":
 		removeObject(minioClient, argsRaw)
+	case argsRaw[0] == "cp":
+		copyObjects(minioClient, argsRaw)
+	case argsRaw[0] == "mv":
+		moveObjects(minioClient, argsRaw)
 	// set/get policy
 	case argsRaw[0] == "policy":
 		bucketPolicy(minioClient, argsRaw)

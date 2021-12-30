@@ -27,7 +27,7 @@ func uploadObject(minioClient *minio.Client, argsRaw []string) {
 		return
 	}
 
-	// Upload the zip file
+	// Upload
 	objectName = storagePath[strings.LastIndex(storagePath, `\`)+1:]
 	newFileName := "upload-" + objectName
 
