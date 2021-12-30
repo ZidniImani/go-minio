@@ -26,7 +26,7 @@ go run . <your_command>
     
 2. Remove
     ```go
-    go run . rm <bucketname>
+    go run . rb <bucketname>
     ```
     
 3. List all bucket
